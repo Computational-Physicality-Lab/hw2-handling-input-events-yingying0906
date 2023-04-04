@@ -11,7 +11,7 @@ of the interaction.
 //1. drag: https://devdojo.com/tnylea/how-to-drag-an-element-using-javascript
 
 var targets = document.getElementsByClassName("target");
-var selectingBox = null;
+var selectedElement = null;
 
 let newPosX = 0,
 	newPosY = 0,
@@ -22,9 +22,20 @@ let newPosX = 0,
 	isMoving = false;
 let isEsc = false;
 
+function selectElement(element) {
+	// deselect the previously selected element if there is one
+	if (selectedElement) {
+		selectedElement.style.backgroundColor = "red";
+	}
+
+	// select the new element
+	selectedElement = element;
+	selectedElement.style.backgroundColor = "blue";
+}
+
 for (let i = 0; i < targets.length; i++) {
 	targets[i].id = i;
-
+	// -------------------------- Computer -------------------------- //
 	/* single click or drag */
 	targets[i].addEventListener("mousedown", function (e) {
 		if (!isMoving) {
@@ -54,11 +65,7 @@ for (let i = 0; i < targets.length; i++) {
 		e.preventDefault();
 
 		/* change color first */
-		if (selectingBox !== null) {
-			selectingBox.style.backgroundColor = "red";
-		}
-		selectingBox = targets[i];
-		selectingBox.style.backgroundColor = "blue";
+		selectElement(targets[i]);
 
 		/* Starting Offset */
 		startOffsetX = targets[i].offsetLeft;
@@ -101,11 +108,7 @@ for (let i = 0; i < targets.length; i++) {
 			e.clientY === startPosY &&
 			!isEsc
 		) {
-			if (selectingBox !== null) {
-				selectingBox.style.backgroundColor = "red";
-			}
-			selectingBox = targets[i];
-			selectingBox.style.backgroundColor = "blue";
+			selectElement(targets[i]);
 		}
 
 		/* remove esc event */
@@ -137,11 +140,50 @@ for (let i = 0; i < targets.length; i++) {
 		document.removeEventListener("keydown", keyDownStop);
 		isMoving = false;
 	}
+
+	// -------------------------- Mobile -------------------------- //
+	targets[i].addEventListener("touchstart", function (e) {
+		startPosX = e.touches[0].pageX;
+		startPosY = e.touches[0].pageY;
+		isMoving = false;
+
+		/* touch move */
+		function touchMoveElement(e) {
+			/* distance */
+			isMoving = true;
+			const currentX = e.touches[0].pageX;
+			const currentY = e.touches[0].pageY;
+			const deltaX = e.touches[0].pageX - startPosX;
+			const deltaY = e.touches[0].pageY - startPosY;
+
+			/* change the position of element */
+			targets[i].style.left = targets[i].offsetLeft + deltaX + "px";
+			targets[i].style.top = targets[i].offsetTop + deltaY + "px";
+
+			/* record the previous coordinate */
+			startPosX = currentX;
+			startPosY = currentY;
+		}
+
+		targets[i].addEventListener("touchmove", touchMoveElement);
+
+		/* touch end */
+		targets[i].addEventListener(
+			"touchend",
+			function (e) {
+				targets[i].removeEventListener("touchmove", touchMoveElement);
+				if (!isMoving) {
+					selectElement(targets[i]);
+				}
+			},
+			{ once: true }
+		);
+	});
 }
 
 /* background unselected*/
 document.body.addEventListener("mousedown", function (event) {
-	console.log("backgound touch");
+	//console.log("backgound touch");
 	var clickedElement = document.elementFromPoint(
 		event.clientX,
 		event.clientY
@@ -151,9 +193,9 @@ document.body.addEventListener("mousedown", function (event) {
 		clickedElement.id.toLowerCase() === "workspace"
 	) {
 		console.log("backgound touch2");
-		if (selectingBox !== null) {
-			selectingBox.style.backgroundColor = "red";
-			selectingBox = null;
+		if (selectedElement !== null) {
+			selectedElement.style.backgroundColor = "red";
+			selectedElement = null;
 		}
 	}
 });

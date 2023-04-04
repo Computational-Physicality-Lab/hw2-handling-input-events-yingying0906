@@ -106,10 +106,6 @@ for (let i = 0; i < targets.length; i++) {
 		}
 	});
 
-	targets[i].addEventListener("contextmenu", function (event) {
-		event.preventDefault();
-	});
-
 	targets[i].addEventListener("click", (event) => {
 		event.stopPropagation();
 	});
