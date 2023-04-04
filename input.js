@@ -20,7 +20,8 @@ let newPosX = 0,
 	startOffsetX = 0,
 	startOffsetY = 0,
 	isMoving = false;
-let isEsc = false;
+let isEsc = false,
+	isTouch = false;
 
 function selectElement(element) {
 	// deselect the previously selected element if there is one
@@ -36,51 +37,6 @@ function selectElement(element) {
 for (let i = 0; i < targets.length; i++) {
 	targets[i].id = i;
 	// -------------------------- Computer -------------------------- //
-	/* single click or drag */
-	targets[i].addEventListener("mousedown", function (e) {
-		if (!isMoving) {
-			// prevent moving and click other
-			e.preventDefault();
-			isEsc = false;
-
-			/* starting position (check drag) */
-			startPosX = e.clientX;
-			startPosY = e.clientY;
-
-			/* Starting Offset */
-			startOffsetX = targets[i].offsetLeft;
-			startOffsetY = targets[i].offsetTop;
-
-			/* moving event*/
-			document.addEventListener("mousemove", moveElement);
-
-			/* stop drag event (mouse up or Esc) */
-			document.addEventListener("keydown", keyDownStop, { once: true });
-			document.addEventListener("mouseup", mouseUpStop, { once: true });
-		}
-	});
-
-	/* double click */
-	targets[i].addEventListener("dblclick", function (e) {
-		e.preventDefault();
-
-		/* change color first */
-		selectElement(targets[i]);
-
-		/* Starting Offset */
-		startOffsetX = targets[i].offsetLeft;
-		startOffsetY = targets[i].offsetTop;
-
-		/* moving event*/
-		document.addEventListener("mousemove", moveElement);
-
-		/* stop drag event (mouse up or Esc) */
-		document.addEventListener("keydown", keyDownStop, { once: true });
-		document.addEventListener("mouseup", dblmouseupStop, { once: true });
-
-		console.log("done");
-	});
-
 	/* --- function --- */
 	/* Moving function */
 	function moveElement(e) {
@@ -141,14 +97,63 @@ for (let i = 0; i < targets.length; i++) {
 		isMoving = false;
 	}
 
+	/* single click or drag */
+	targets[i].addEventListener("mousedown", function (e) {
+		console.log("mousedown");
+		if (!isMoving && !isTouch) {
+			console.log(" down triggered");
+			// prevent moving and click other
+			e.preventDefault();
+			isEsc = false;
+
+			/* starting position (check drag) */
+			startPosX = e.clientX;
+			startPosY = e.clientY;
+
+			/* Starting Offset */
+			startOffsetX = targets[i].offsetLeft;
+			startOffsetY = targets[i].offsetTop;
+
+			/* moving event*/
+			document.addEventListener("mousemove", moveElement);
+
+			/* stop drag event (mouse up or Esc) */
+			document.addEventListener("keydown", keyDownStop, { once: true });
+			document.addEventListener("mouseup", mouseUpStop, { once: true });
+		}
+	});
+
+	/* double click */
+	targets[i].addEventListener("dblclick", function (e) {
+		e.preventDefault();
+
+		/* change color first */
+		selectElement(targets[i]);
+
+		/* Starting Offset */
+		startOffsetX = targets[i].offsetLeft;
+		startOffsetY = targets[i].offsetTop;
+
+		/* moving event*/
+		document.addEventListener("mousemove", moveElement);
+
+		/* stop drag event (mouse up or Esc) */
+		document.addEventListener("keydown", keyDownStop, { once: true });
+		document.addEventListener("mouseup", dblmouseupStop, { once: true });
+
+		console.log("done");
+	});
+
 	// -------------------------- Mobile -------------------------- //
 	targets[i].addEventListener("touchstart", function (e) {
 		startPosX = e.touches[0].pageX;
 		startPosY = e.touches[0].pageY;
 		isMoving = false;
+		isTouch = true; //always true prevent mousedown triggered
 
 		/* touch move */
 		function touchMoveElement(e) {
+			//console.log("touchmove");
 			/* distance */
 			isMoving = true;
 			const currentX = e.touches[0].pageX;
@@ -171,10 +176,14 @@ for (let i = 0; i < targets.length; i++) {
 		targets[i].addEventListener(
 			"touchend",
 			function (e) {
+				e.stopPropagation();
+				console.log("touchup");
+
 				targets[i].removeEventListener("touchmove", touchMoveElement);
 				if (!isMoving) {
 					selectElement(targets[i]);
 				}
+				isMoving = false;
 			},
 			{ once: true }
 		);

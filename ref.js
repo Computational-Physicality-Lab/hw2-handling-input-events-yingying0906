@@ -7,113 +7,187 @@ You will certainly need a large number of global variables to keep track of the 
 of the interaction.
 */
 
+// reference:
+//1. drag: https://devdojo.com/tnylea/how-to-drag-an-element-using-javascript
+
 var targets = document.getElementsByClassName("target");
+var selectedElement = null;
 
-let isDragging = false,
-	isDblClick = false,
-	isEsc = false;
-let clickTimer;
-let originalX, originalY, OffsetX, OffsetY;
+let newPosX = 0,
+	newPosY = 0,
+	startPosX = 0,
+	startPosY = 0,
+	startOffsetX = 0,
+	startOffsetY = 0,
+	isMoving = false;
+let isEsc = false;
 
-let selected_div = null;
-let dragging_div = null;
+function selectElement(element) {
+	// deselect the previously selected element if there is one
+	if (selectedElement) {
+		selectedElement.style.backgroundColor = "red";
+	}
+
+	// select the new element
+	selectedElement = element;
+	selectedElement.style.backgroundColor = "blue";
+}
 
 for (let i = 0; i < targets.length; i++) {
-	targets[i].style.zIndex = 0;
-
-	targets[i].addEventListener("mousedown", function (event) {
-		if (isDblClick) {
-			isDragging = false;
-			isDblClick = false;
-			dragging_div = null;
-			targets[i].style.zIndex = 1;
-		} else {
-			isDragging = false;
+	targets[i].id = i;
+	// -------------------------- Computer -------------------------- //
+	/* single click or drag */
+	targets[i].addEventListener("mousedown", function (e) {
+		if (!isMoving) {
+			// prevent moving and click other
+			e.preventDefault();
 			isEsc = false;
 
-			/* original coordinate */
-			originalX = targets[i].offsetLeft;
-			originalY = targets[i].offsetTop;
+			/* starting position (check drag) */
+			startPosX = e.clientX;
+			startPosY = e.clientY;
 
-			/* relative x, y */
-			OffsetX = event.clientX - originalX;
-			OffsetY = event.clientY - originalY;
+			/* Starting Offset */
+			startOffsetX = targets[i].offsetLeft;
+			startOffsetY = targets[i].offsetTop;
 
-			clickTimer = setTimeout(function () {
-				isDragging = true;
-			}, 70);
+			/* moving event*/
+			document.addEventListener("mousemove", moveElement);
+
+			/* stop drag event (mouse up or Esc) */
+			document.addEventListener("keydown", keyDownStop, { once: true });
+			document.addEventListener("mouseup", mouseUpStop, { once: true });
 		}
 	});
 
-	targets[i].addEventListener("mousemove", function (event) {
-		if (isDragging) {
-			console.log("Dragging detected");
+	/* double click */
+	targets[i].addEventListener("dblclick", function (e) {
+		e.preventDefault();
 
-			dragging_div = targets[i];
-			targets[i].style.zIndex = 99;
+		/* change color first */
+		selectElement(targets[i]);
 
-			let left = event.clientX - OffsetX;
-			let top = event.clientY - OffsetY;
+		/* Starting Offset */
+		startOffsetX = targets[i].offsetLeft;
+		startOffsetY = targets[i].offsetTop;
 
-			targets[i].style.left = left + "px";
-			targets[i].style.top = top + "px";
-		}
-		if (isDblClick) {
-			console.log("Dblclick Dragging detected");
+		/* moving event*/
+		document.addEventListener("mousemove", moveElement);
 
-			dragging_div = targets[i];
-			targets[i].style.zIndex = 99;
+		/* stop drag event (mouse up or Esc) */
+		document.addEventListener("keydown", keyDownStop, { once: true });
+		document.addEventListener("mouseup", dblmouseupStop, { once: true });
 
-			let left = event.clientX - OffsetX;
-			let top = event.clientY - OffsetY;
-
-			targets[i].style.left = left + "px";
-			targets[i].style.top = top + "px";
-		}
+		console.log("done");
 	});
 
-	targets[i].addEventListener("mouseup", function (event) {
-		clearTimeout(clickTimer);
-		if (!isDragging && isEsc === false) {
-			if (event.button === 0) {
-				console.log("Single click detected");
+	/* --- function --- */
+	/* Moving function */
+	function moveElement(e) {
+		isMoving = true;
 
-				if (selected_div !== null) {
-					selected_div.style.backgroundColor = "red";
+		newPosX = startPosX - e.clientX;
+		newPosY = startPosY - e.clientY;
+
+		startPosX = e.clientX;
+		startPosY = e.clientY;
+
+		targets[i].style.top = targets[i].offsetTop - newPosY + "px";
+		targets[i].style.left = targets[i].offsetLeft - newPosX + "px";
+	}
+
+	/* single click drag mouse up stop */
+	function mouseUpStop(e) {
+		/* remove moving event */
+		document.removeEventListener("mousemove", moveElement);
+
+		/* If it is not moving then change color (selected) */
+		if (
+			!isMoving &&
+			e.clientX === startPosX &&
+			e.clientY === startPosY &&
+			!isEsc
+		) {
+			selectElement(targets[i]);
+		}
+
+		/* remove esc event */
+		document.removeEventListener("keydown", keyDownStop);
+
+		/* stop moving */
+		isMoving = false;
+	}
+
+	/* esc drop */
+	function keyDownStop(e) {
+		if (e.key === "Escape") {
+			isEsc = true;
+			console.log("Esc got");
+
+			/* back to original x,y */
+			targets[i].style.left = startOffsetX + "px";
+			targets[i].style.top = startOffsetY + "px";
+
+			document.removeEventListener("mousemove", moveElement);
+			document.removeEventListener("mouseup", dblmouseupStop);
+			isMoving = false;
+		}
+	}
+
+	/* mouse down for dbl click drop */
+	function dblmouseupStop() {
+		document.removeEventListener("mousemove", moveElement);
+		document.removeEventListener("keydown", keyDownStop);
+		isMoving = false;
+	}
+
+	// -------------------------- Mobile -------------------------- //
+	targets[i].addEventListener("touchstart", function (e) {
+		startPosX = e.touches[0].pageX;
+		startPosY = e.touches[0].pageY;
+		isMoving = false;
+
+		/* touch move */
+		function touchMoveElement(e) {
+			console.log("touchmove");
+			/* distance */
+			isMoving = true;
+			const currentX = e.touches[0].pageX;
+			const currentY = e.touches[0].pageY;
+			const deltaX = e.touches[0].pageX - startPosX;
+			const deltaY = e.touches[0].pageY - startPosY;
+
+			/* change the position of element */
+			targets[i].style.left = targets[i].offsetLeft + deltaX + "px";
+			targets[i].style.top = targets[i].offsetTop + deltaY + "px";
+
+			/* record the previous coordinate */
+			startPosX = currentX;
+			startPosY = currentY;
+		}
+
+		targets[i].addEventListener("touchmove", touchMoveElement);
+
+		/* touch end */
+		targets[i].addEventListener(
+			"touchend",
+			function tryyy(e) {
+				e.stopPropagation();
+				console.log("touchup");
+
+				targets[i].removeEventListener("touchmove", touchMoveElement);
+				if (!isMoving) {
+					selectElement(targets[i]);
 				}
-				selected_div = targets[i];
-				selected_div.style.backgroundColor = "blue";
-			}
-		} else {
-			isDragging = false;
-			dragging_div = null;
-			targets[i].style.zIndex = 1;
-		}
-	});
-
-	targets[i].addEventListener("dblclick", function (event) {
-		clearTimeout(clickTimer);
-		if (!isDragging) {
-			console.log("Double click detected");
-
-			if (selected_div !== null) {
-				selected_div.style.backgroundColor = "red";
-			}
-			selected_div = targets[i];
-			selected_div.style.backgroundColor = "blue";
-
-			isDblClick = true;
-		}
-	});
-
-	targets[i].addEventListener("click", (event) => {
-		event.stopPropagation();
+			},
+			{ once: true }
+		);
 	});
 }
 
-/* Background cancel */
-document.body.addEventListener("click", function (event) {
-	console.log("backgound touch");
+/* background unselected*/
+document.body.addEventListener("mousedown", function (event) {
+	//console.log("backgound touch");
 	var clickedElement = document.elementFromPoint(
 		event.clientX,
 		event.clientY
@@ -123,38 +197,9 @@ document.body.addEventListener("click", function (event) {
 		clickedElement.id.toLowerCase() === "workspace"
 	) {
 		console.log("backgound touch2");
-		if (isEsc !== true) {
-			if (selected_div !== null) {
-				console.log("seleceting: " + selected_div);
-				selected_div.style.backgroundColor = "red";
-				selected_div = null;
-			}
-			isEsc = false;
+		if (selectedElement !== null) {
+			selectedElement.style.backgroundColor = "red";
+			selectedElement = null;
 		}
-	}
-});
-
-/* Escape */
-
-window.addEventListener("keydown", function (event) {
-	if (isDragging) {
-		isEsc = true;
-		isDragging = false;
-
-		dragging_div.style.left = originalX + "px";
-		dragging_div.style.top = originalY + "px";
-		dragging_div.style.zIndex = 1;
-
-		dragging_div = null;
-	}
-	if (isDblClick) {
-		isEsc = true;
-		isDblClick = false;
-
-		dragging_div.style.left = originalX + "px";
-		dragging_div.style.top = originalY + "px";
-		dragging_div.style.zIndex = 1;
-
-		dragging_div = null;
 	}
 });
