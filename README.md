@@ -8,6 +8,8 @@ This is the starter code of [2023-Programming User Interface Homework](https://h
 - Po Ying, Law
 
 # deploy 的網站連結
+- 網站為hw1
+- 請點擊**CREATE YOUR OWN**進入HW2的畫面
 - https://bright-bublanina-402c50.netlify.app/
 
 # 設計
