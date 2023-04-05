@@ -74,7 +74,7 @@ separates the code for two types of devices, computer and mobile
     - The determination method is as follows:
         - If selected element is not null, then an element is selected.
         - The background `event.touches.length` is 2.
-        - `isResizing` is true to record the resizing mode.
+        - `isResizing` becomes true to start the resizing mode.
         
 - Determine the element's size change by the distance between the two fingers. If the element's change is less than 20px, maintain a size of 20px.
     - The determination method is as follows:
