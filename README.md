@@ -73,7 +73,7 @@ separates the code for two types of devices, computer and mobile
 - If an element is selected, you can touch the screen with two fingers and change the element's size by moving the two fingers.
     - The determination method is as follows:
         - If selected element is not null, then an element is selected.
-        - The background event.touches.length is 2.
+        - The background `event.touches.length` is 2.
         - `isResizing` is true to record the resizing mode.
         
 - Determine the element's size change by the distance between the two fingers. If the element's change is less than 20px, maintain a size of 20px.
