@@ -1,93 +1,44 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-8d59dc4de5201274e310e4c54b9627a8934c3b88527886e3b421487c677d23eb.svg)](https://classroom.github.com/a/vtMjwcap)
-# hw2-handling-input-events
-This is the starter code of [2023-Programming User Interface Homework](https://hackmd.io/@akairisu/HkUibgmx3)
+# hw1-Html-CSS-and-JavaScript
+
+## 姓名
+
+-   羅寶瑩
+-   Po Ying, Law
+
+## 測試環境
+
+> 你所實作的網站如何被測試，並描述你所繳交的任何額外 shirts.js 文件（若有）。
+
+-   Visual Studio Code
+    -   Extension: ritwickdey.LiveServer
+    -   ![](https://i.imgur.com/J9hpiUS.png)
+
+## 加分作業項目
+
+> 你所實作的加分作業項目，以及如何觸發它。
+
+-   「快速查看」按鈕
+    -   在 `products.html` 頁面按下 `Quick View` 按鈕觸發
+    -   Quick View 視窗將顯示在頁面底部，畫面自動往下捲動
+    -   按下 `Close` 按鈕以關閉 Quick View 視窗
+-   響應式頁面 Responsive Web Page
+    -   觸發條件
+        -   在 Chrome 開發者工具中使用行動裝置工具欄以轉換到行動裝置畫面
+        -   或將 Window 縮小至小於 700px
+    -   效果
+        -   部分內容會以上下堆疊顯示
+        -   排版些許改動
+    -   ![](https://i.imgur.com/rlWSVGI.gif)
+
+## 其他有趣之處
+
+> 其他你所實作的網站的有趣之處
+
+-   向上捲動按鈕
+    -   在視窗寬度少於 700px 時，便會出現向上捲動按鈕
+    -   ![scrollbtn](https://user-images.githubusercontent.com/30721578/226112344-169eba31-10e8-41eb-a405-9aa93345cc63.gif)
 
 
-# 姓名
-- 羅寶瑩
-- Po Ying, Law
+## Reference
 
-# deploy 的網站連結
-- https://bright-bublanina-402c50.netlify.app/
-
-# 設計
-separates the code for two types of devices, computer and mobile
-
-## Computer
-### Element - Click Actions
-- There are three possible actions when performing **MouseDown** on an element:
-    - Single-click
-    - Double-click
-    - Moving (Dragging)
-
-- The determination method is as follows:
-    - Single-click
-        - If there is no **MouseMove** after **MouseDown**, the parameter `isMoving` is false. After **MouseUp**, if the mouse's position has not changed and `isMoving` is false, then it is a single-click.
-
-    - Double-click
-        - Use the **dblclick** event listener to determine the occurrence of a double-click.
-    - Moving
-        - If there is **MouseMove** after **MouseDown**, the parameter `isMoving` is true. It is determined as Moving after **MouseUp**.
-
-### Element - Esc Interrupt Action
-- If a double-click or moving occurs, create a **Keydown** listener. When it receives an event from the **Esc** key, the element returns to its original position and stops moving.
-
-
-### Background - Deselect Action
-- Perform an unselect action when performing **MouseDown** on the background. If the **MouseDown** position is in the `workspace`, then unselect the selected element.
-
-
-## Mobile
-### Element - Touch Actions
-- There are three possible actions when performing **TouchStart** on an element:
-    - Single tap
-    - Double tap
-    - Moving (Dragging)
-
-- The determination method is as follows:
-    - Single tap
-        - Set a timer during the first tap. If there is no second tap within the timer's time, it is determined as a single tap.
-        - At **touchend**, if it is not a double tap and the finger's movement range does not exceed 10px, it is a normal single tap (select).
-        - (Please refer to the "有趣之處" section for the reasons behind the 10px judgement.)
-    - Double tap
-        - Set a timer during the first tap. If there is a second tap within the timer's time, it is determined as a double tap.
-    - Single tap and move (Dragging)
-        - If the finger's movement range exceeds 10px, and **touchmove** event triggers during movement, it is determined as moving.
-
-### Element - Following Mode
-- If following mode is turned on, the parameter `isFollowing` is true to maintain following. Create a **touchmove** listener for the document to obtain the element's new position until clicking the element again or using two fingers to stop.
-
-### Element - Two-Finger Stop Action
-- If a double tap or moving occurs and the element is moving, if it receives an action from two fingers, stop moving, and return to the position before the action.
-- The determination method is as follows:
-    - Use `isMoving` and `isFollowing` to determine whether the element is moving. If one of them is true and `event.touches.length` equals 2, stop the action.
-
-
-
-### Background - Deselect Action
-- Perform an unselect action when performing **touchstart** on the background. If the **touchstart** position is in the "workspace," then unselect it.
-
-### Changing Element Size Action
-- If an element is selected, you can touch the screen with two fingers and change the element's size by moving the two fingers.
-    - The determination method is as follows:
-        - If selectedelement is not null, then an element is selected.
-        - The background event.touches.length is 2.
-        - `isResizing` is true to record the resizing mode.
-        
-- Determine the element's size change by the distance between the two fingers. If the element's change is less than 20px, maintain a size of 20px.
-    - The determination method is as follows:
-        - Similar to the following code (incomplete code)
-        - ![](https://i.imgur.com/NsypDdr.png)
-- If one finger leaves, the size change will not be restored. If the finger returns, the resizing action will continue.
-    - only **touchend** and three-finger actions can terminate the resize mode.
-    
-- If two fingers are resizing the element, touching the screen with the third finger will immediately stop the resizing action, and the element will return to its original size.
-    - ![](https://i.imgur.com/MbORI11.png)
-
-
-
-# 加分作業項目
-- N/A
-
-# 其他有趣之處
-During the process of testing the mobile version of the assignment, I often faced difficulties in triggering single-tap actions due to slight shaking of my fingers. This was troublesome as it frequently caused incorrect events to be triggered or unnecessary events to occur. Therefore, I added a value (10px) to tolerate a little bit of finger shaking. And I checked if the displacement of the finger movement exceeded this value during each touch event.
+-   Icon reference: https://www.svgrepo.com/svg/507465/align-arrow-up

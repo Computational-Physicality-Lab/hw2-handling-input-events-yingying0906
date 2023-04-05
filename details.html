@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SSUI HW1 - Details</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@200;500&family=Open+Sans&display=swap"
+        rel="stylesheet">
+
+    <!-- Your CSS Code -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <!-- JSON Shirt Object -->
+    <script src="shirts.js"></script>
+
+    <!-- Your JS Code -->
+    <script src="main.js"></script>
+</head>
+
+<body onload="initDetails()">
+    <!-- Your Code Here -->
+    <!-- header -->
+    <header id="header">
+        <a href="index.html"><img src="site_images/logo.png" alt="" class="logo"></a>
+        <h1>Scotty Shirts U Illustrate (SSUI)
+        </h1>
+        <a class="cart" href="not_implemented.html">
+            <img src="site_images/shopping-cart.svg" alt="">
+            0
+        </a>
+    </header>
+
+    <!-- nav -->
+    <nav>
+        <div><a href="products.html">T-SHIRTS</a></div>
+        <div><a href="not_implemented.html">CREATE FROM PICTURE</a></div>
+        <div><a href="not_implemented.html">CREATE YOUR OWN</a></div>
+        <div><a href="not_implemented.html">ABOUT US</a></div>
+        <div><a href="not_implemented.html">LOG IN</a></div>
+    </nav>
+
+    <!-- details -->
+    <div class="main">
+        <h1 id="detail_name">
+            <!-- shirt name -->
+        </h1>
+        <div class="detail_page">
+            <img src="" alt="" id="detail_img">
+            <div class="detail_right_box">
+                <!-- right details -->
+                <h2 class="title" id="detail_price">
+                    <!-- price -->
+                </h2>
+                <p class="text" id="detail_descript">
+                    <!-- description -->
+                </p>
+                <div id="detail_side">
+                    <!-- side button -->
+                </div>
+                <div id="detail_color">
+                    <!-- color button -->
+                </div>
+            </div>
+        </div>
+        <div id="product_page">
+
+        </div>
+
+    </div>
+
+
+    <!-- footer -->
+    <footer>
+        <div><a href="not_implemented.html" class="button_animation_0">Contact Us</a></div>
+        <div><a href="not_implemented.html" class="button_animation_0">Site Map</a></div>
+        <div><a href="not_implemented.html" class="button_animation_0">Privacy Policy</a></div>
+        <div><a href="not_implemented.html" class="button_animation_0">Careers</a></div>
+        <div><a href="not_implemented.html" class="button_animation_0">Reviews</a></div>
+        <div>Designed by Po Ying, Law</div>
+    </footer>
+
+    <button onclick="scrollup()" class="red_button" id="Up_button">
+        <img src="supplement/align-arrow-up-svgrepo-com.svg" alt="">
+    </button>
+</body>
+
+</html>

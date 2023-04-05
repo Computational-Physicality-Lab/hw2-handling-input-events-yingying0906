@@ -1,0 +1,392 @@
+/* Your Code Here */
+html {
+	scroll-behavior: smooth;
+}
+body {
+	margin: 0px;
+	font-family: "Catamaran";
+	font-weight: lighter;
+	word-break: break-word;
+}
+a {
+	text-decoration: none;
+	color: white;
+}
+
+/* -------------------- css usage --------------------*/
+.fullimg {
+	min-width: 100%;
+	max-width: 100%;
+}
+.main {
+	margin: 1vh;
+	margin-left: 7vw;
+	margin-right: 7vw;
+}
+/* text usage*/
+.title {
+	font-weight: lighter;
+}
+.text {
+	font-weight: lighter;
+}
+
+/* button usage*/
+.red_button {
+	background-color: #ac2432;
+	border: none;
+	border-radius: 4px;
+	padding: 10px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+
+	color: white;
+	font-weight: normal;
+	font-family: "Open Sans";
+	font-size: 0.8rem;
+
+	margin-left: 0.3vw;
+	margin-right: 0.3vw;
+}
+.img_button {
+	border: none;
+}
+.img_button:hover {
+	cursor: pointer;
+}
+.button_animation_0 {
+	text-decoration: none;
+	color: #c7c7c7;
+}
+.button_animation_0:visited {
+	text-decoration: none;
+}
+.button_animation_0:hover {
+	color: white;
+	transition: 0.5s;
+	cursor: pointer;
+}
+#Up_button {
+	display: none;
+	background-color: #d35763;
+	position: fixed;
+	bottom: 15px;
+	right: 15px;
+	opacity: 0.7;
+}
+#Up_button:hover {
+	cursor: pointer;
+}
+#Up_button img {
+	width: 25px;
+	filter: invert(1);
+}
+
+/* -------------------- header --------------------*/
+header {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border-top: #ac2432 solid 20px;
+	margin: 0px;
+}
+.logo {
+	width: 250px;
+}
+header * {
+	margin-left: 1vw;
+	margin-right: 1vw;
+	font-weight: normal;
+}
+header h1 {
+	font-size: 3em;
+}
+
+.cart {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+
+	background-color: #ac2432;
+	border: none;
+	border-radius: 10px;
+	width: 80px;
+	height: 60px;
+
+	text-decoration: none;
+	color: white;
+	font-weight: normal;
+	font-size: 25px;
+}
+.cart * {
+	margin: 0;
+	margin-right: 5px;
+	width: 45%;
+	filter: invert(1);
+}
+
+/* -------------------- nav --------------------*/
+nav {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border-top: #d4d4d4 solid 1px;
+	border-bottom: #d4d4d4 solid 1px;
+	margin: 0px;
+	padding: 1.5vh;
+}
+
+nav div a {
+	text-decoration: none;
+	color: #ac2432;
+	font-weight: lighter;
+	font-family: "Open Sans";
+	margin: 2vw;
+	margin-top: 1vh;
+	margin-bottom: 1vh;
+	border-bottom: solid transparent 5px;
+}
+nav div a:visited {
+	color: #ac2432;
+}
+nav div a:hover {
+	border-bottom: #ac2432 solid 5px;
+	transition: border-bottom 0.8s;
+}
+
+/* -------------------- index.html --------------------*/
+.description {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: space-around;
+	margin-left: 5vw;
+	margin-right: 5vw;
+}
+.description div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	color: #ac2432;
+	border: #ac2432 3px solid;
+	border-radius: 10px;
+
+	margin: 2vw;
+	margin-top: 2vh;
+	margin-bottom: 2vh;
+	padding: 2vw;
+	padding-top: 2vh;
+	padding-bottom: 2vh;
+}
+
+.description div * {
+	margin: 0px;
+}
+.description p {
+	color: grey;
+}
+
+/* -------------------- footer --------------------*/
+footer {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: space-around;
+	background-color: #ac2432;
+	margin: 0px;
+	padding: 1.5vh;
+}
+footer * {
+	color: white;
+	margin-left: 1vw;
+	margin-right: 1vw;
+}
+
+/* -------------------- notimplement.html --------------------*/
+.not {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	font-weight: normal;
+	font-size: 1.5rem;
+	color: #383838;
+	opacity: 0.5;
+}
+.not img {
+	width: 500px;
+}
+
+/* -------------------- Product.html  --------------------*/
+#product_page {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+}
+.product_box {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	margin: 1vw;
+	border: #ac2432 2px solid;
+	border-radius: 10px;
+
+	overflow: hidden;
+	width: 38vw;
+	max-width: 380px;
+}
+.product_box img {
+	max-width: 100%;
+}
+.product_box * {
+	margin: 0.5vh;
+	margin-left: 1vw;
+	margin-right: 1vw;
+}
+
+/* product box's button */
+.product_box > div {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.quick_view_box {
+	display: none;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	background-color: rgb(184, 184, 184);
+	padding: 20vw%;
+	padding-top: 3vh;
+	padding-bottom: 3vh;
+}
+.quick_view_box * {
+	margin: 0;
+}
+.quick_view_box_left {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+.quick_view_box_left img {
+	width: 20vw;
+	max-width: 200px;
+	height: fit-content;
+}
+.quick_view_box_right {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	margin-left: 2vw;
+	width: 40%;
+}
+
+.quick_view_box_right h2,
+p {
+	color: #ac2432;
+	margin-bottom: 1vh;
+}
+.quick_view_box_right button {
+	width: 70px;
+}
+
+/* -------------------- Details.html  --------------------*/
+.detail_page {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
+	color: #ac2432;
+}
+.detail_right_box {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	margin-left: 2vw;
+}
+
+.detail_right_box * {
+	margin-top: 0px;
+	margin-bottom: 1vh;
+}
+
+/* color change */
+.button_animation_1 {
+	text-decoration: none;
+	color: black;
+}
+.button_animation_1:visited {
+	text-decoration: none;
+}
+.button_animation_1:hover {
+	color: white;
+	transition: 0.5s;
+	cursor: pointer;
+}
+
+/* media */
+@media screen and (max-width: 700px) {
+	header {
+		flex-direction: column;
+		text-align: center;
+		font-size: 0.8em;
+	}
+	.logo {
+		width: 50vw;
+	}
+	header * {
+		margin: 0;
+		margin-bottom: 1vh;
+	}
+	nav {
+		flex-direction: column;
+	}
+	.not img {
+		width: 50vw;
+	}
+	.description {
+		flex-direction: column;
+	}
+	footer {
+		flex-direction: column;
+		align-items: center;
+		color: #161616;
+	}
+	/* other */
+	#product_page {
+		flex-direction: column;
+		align-items: center;
+	}
+	.product_box {
+		width: 70vw;
+	}
+	.detail_page {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.detail_page img {
+		width: 80vw;
+	}
+
+	.quick_view_box {
+		flex-direction: column;
+	}
+	.quick_view_box_left img {
+		width: 35vw;
+		height: fit-content;
+	}
+	.quick_view_box_right {
+		width: 70vw;
+	}
+	#Up_button {
+		display: block;
+	}
+}
